@@ -15,7 +15,7 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI api() {
         return new OpenAPI()
-                .servers(List.of(new Server().url("http://localhost:8080")))
+                .servers(List.of(new Server().url("https://agregation.onrender.com")))
                 .info(new Info().title("Метод агрегации"));
     }
 }
