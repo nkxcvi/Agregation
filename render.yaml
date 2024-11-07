@@ -1,6 +1,0 @@
-services:
-  - type: web
-    name: Agregation
-    env: docker
-    buildCommand: "mvn clean install"l
-    startCommand: "java -jar target/Agregation-0.0.1-SNAPSHOT.jar"
