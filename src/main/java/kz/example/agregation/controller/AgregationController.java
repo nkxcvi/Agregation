@@ -30,7 +30,7 @@ public class AgregationController {
             @Parameter(description = "ИИН/БИН") @RequestParam("participantId") String participantId,
             @Parameter(description = "Номер производственной линии") @RequestParam("productionLineId") String productionLineId,
             @Parameter(description = "Идентификатор производственного заказа") @RequestParam("productionOrderId") String productionOrderId,
-            @Parameter(description = "Количество потребительских в группой упавоке") @RequestParam("stinsCount") int count,
+            //@Parameter(description = "Количество потребительских в группой упаковке") @RequestParam("stinsCount") int count,
             @Parameter(description = "OMS ID") @RequestParam("omsId") String omsId,
             @Parameter(description = "Client Token") @RequestParam("clientToken") String clientToken) {
 
@@ -42,7 +42,7 @@ public class AgregationController {
         log.debug("Данные из Excel успешно прочитаны: {}", dataDtoList);
 
         // Генерируем AggregationUnitDto
-        List<AggregationUnitDto> aggregationUnitDtoList = agregationService.aggregationUnitDtoArrayList(dataDtoList, count);
+        List<AggregationUnitDto> aggregationUnitDtoList = agregationService.aggregationUnitDtoArrayList(dataDtoList);
         log.debug("Сформирован список AggregationUnitDto: {}", aggregationUnitDtoList);
 
         // Создаем AggregationDto

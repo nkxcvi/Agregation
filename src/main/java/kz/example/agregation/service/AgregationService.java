@@ -45,8 +45,9 @@ public class AgregationService {
         log.debug("Тело запроса: {}", aggregationDto);
 
         // Установка базовых параметров для RestAssured
-        baseURI = "https://suzcloud.stage.ismet.kz/api/v2/";
-        basePath = "tobacco/aggregation";
+        baseURI = "https://omscloud.ismet.kz/api/v2/";
+        //baseURI = "https://suzcloud.stage.ismet.kz/api/v2/";
+        basePath = "pharma/aggregation";
 
         // Выполняем запрос
         Response response = given().log().all()
@@ -73,14 +74,15 @@ public class AgregationService {
         }
     }
 
-    public List<AggregationUnitDto> aggregationUnitDtoArrayList(List<ExcelDataDto> dataDtoList, int count) {
-        log.info("Начинается создание списка AggregationUnitDto, count={}", count);
+    public List<AggregationUnitDto> aggregationUnitDtoArrayList(List<ExcelDataDto> dataDtoList) {
+        log.info("Начинается создание списка AggregationUnitDto.");
 
         Map<String, List<String>> unitSerialNumberMap = new HashMap<>();
 
         for (ExcelDataDto data : dataDtoList) {
-            String unitSerialNumber = data.getColumnB().substring(0, 25).replaceAll("\"", "\\\"");
-            String sntin = data.getColumnA().substring(0, 21).replaceAll("\"", "\\\"");
+            String unitSerialNumber = data.getColumnB();
+            //String sntin = data.getColumnA().substring(0, 31).replaceAll("\"", "\\\"");
+            String sntin = data.getColumnA();
 
             unitSerialNumberMap.computeIfAbsent(unitSerialNumber, k -> new ArrayList<>()).add(sntin);
         }
@@ -90,10 +92,11 @@ public class AgregationService {
         List<AggregationUnitDto> aggregationUnitDtoList = new ArrayList<>();
 
         for (Map.Entry<String, List<String>> entry : unitSerialNumberMap.entrySet()) {
+            int aggregationUnitCapacity = entry.getValue().size(); // Используем размер списка или другое логическое значение
             AggregationUnitDto aggregationUnitDto = new AggregationUnitDto(
                     entry.getValue().size(),
                     "AGGREGATION",
-                    count,
+                    aggregationUnitCapacity,
                     entry.getValue(),
                     entry.getKey()
             );
